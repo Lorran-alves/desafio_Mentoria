@@ -1,0 +1,103 @@
+*{
+    font-size: 18px;
+    margin:0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+body{
+    /* background-color: white; */
+    font-size: 18px;
+    background: rgb(47, 79, 79);;
+    background: linear-gradient(90deg, rgba(47, 79, 79,1) 0%, rgba(47, 79, 79,1) 50%);
+}
+#container{
+    width: 1100px;
+    margin: auto;
+}
+/* ESTILIZANDO A SEÇÃO DO FORMULARIO PARA O LOGIN */
+#secaoLogin,
+#secaoCadastro{
+    margin: auto;
+    display: flex;
+    flex-direction:column ;
+    justify-content:center ;
+    align-items: center;
+    margin-top: 15%; 
+    width: 30%;
+    min-width: 300px;
+    background-color: #ccc;
+    border-radius: 20px;
+    align-items: center;
+    padding: 2%;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+input,
+button
+{ 
+    padding: 10px;
+    margin:1.5% 0 ;
+    border-radius: 10px;
+    box-sizing: border-box;
+    border: none;
+}
+
+.inputComIcon{
+    width: 100%;
+    position: relative;
+    margin: auto;
+    text-align: center;
+}
+.inputComIcon input:focus{
+    box-shadow: 0 0 8px 1px darkslategrey;
+}
+.inputComIcon input{
+    padding-right: 30px;
+    width: 95%;
+    font-size: 0.9em;
+}
+.inputComIcon i{
+    font-size: 1em;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px;
+}
+.iconPassword i{
+    cursor: pointer;
+}
+.iconPassword i:hover{
+    border:1px;
+    border-radius: 50%;
+    background: rgb(236, 235, 235);
+    box-shadow: 0 0px 0 1px rgb(202, 200, 200);
+}
+button{
+    cursor: pointer;
+    background-color: darkslategrey;
+    width: 95%;
+    color: white;
+}
+label{
+    width: 100%;
+}
+
+i{
+    color: #606060;
+}
+a{
+    text-decoration: none;
+    color:rgb(47, 79, 79);
+}
+p{
+    color: rgb(143, 134, 134);
+}
+#secaoCadastro{
+    display: none;
+}
+

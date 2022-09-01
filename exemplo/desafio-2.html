@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Lista de Tarefas</title>
+</head>
+<body>
+
+	<style type="text/css">
+		@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+		.login-page {
+		  width: 360px;
+		  padding: 8% 0 0;
+		  margin: auto;
+		}
+		.form {
+		  position: relative;
+		  z-index: 1;
+		  background: #FFFFFF;
+		  max-width: 360px;
+		  margin: 0 auto 100px;
+		  padding: 45px;
+		  text-align: center;
+		  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+		}
+		.form input {
+		  font-family: "Roboto", sans-serif;
+		  outline: 0;
+		  background: #f2f2f2;
+		  width: 100%;
+		  border: 0;
+		  margin: 0 0 15px;
+		  padding: 15px;
+		  box-sizing: border-box;
+		  font-size: 14px;
+		}
+		.form button {
+		  font-family: "Roboto", sans-serif;
+		  text-transform: uppercase;
+		  outline: 0;
+		  background: #4CAF50;
+		  width: 100%;
+		  border: 0;
+		  padding: 15px;
+		  color: #FFFFFF;
+		  font-size: 14px;
+		  -webkit-transition: all 0.3 ease;
+		  transition: all 0.3 ease;
+		  cursor: pointer;
+		}
+		.form button:hover,.form button:active,.form button:focus {
+		  background: #43A047;
+		}
+		.form .message {
+		  margin: 15px 0 0;
+		  color: #b3b3b3;
+		  font-size: 12px;
+		}
+		.form .message a {
+		  color: #4CAF50;
+		  text-decoration: none;
+		}
+		.form .register-form {
+		  display: block;
+		}
+		.container {
+		  position: relative;
+		  z-index: 1;
+		  max-width: 300px;
+		  margin: 0 auto;
+		}
+		.container:before, .container:after {
+		  content: "";
+		  display: block;
+		  clear: both;
+		}
+		.container .info {
+		  margin: 50px auto;
+		  text-align: center;
+		}
+		.container .info h1 {
+		  margin: 0 0 15px;
+		  padding: 0;
+		  font-size: 36px;
+		  font-weight: 300;
+		  color: #1a1a1a;
+		}
+		.container .info span {
+		  color: #4d4d4d;
+		  font-size: 12px;
+		}
+		.container .info span a {
+		  color: #000000;
+		  text-decoration: none;
+		}
+		.container .info span .fa {
+		  color: #EF3B3A;
+		}
+		body {
+		  background: #76b852; /* fallback for old browsers */
+		  background: rgb(141,194,111);
+		  background: linear-gradient(90deg, rgba(141,194,111,1) 0%, rgba(118,184,82,1) 50%);
+		  font-family: "Roboto", sans-serif;
+		  -webkit-font-smoothing: antialiased;
+		  -moz-osx-font-smoothing: grayscale;      
+		}
+
+		/* CSS da tabela de tarefas */
+		.esconder {
+			display: block;
+		}
+	</style>
+
+	<style type="text/css">
+
+		table {
+		border: 1px solid #ccc;
+		border-collapse: collapse;
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		table-layout: fixed;
+		}
+
+		table caption {
+		font-size: 1.5em;
+		margin: .5em 0 .75em;
+		}
+
+		table tr {
+		background-color: #f8f8f8;
+		border: 1px solid #ddd;
+		padding: .35em;
+		}
+
+		table th,
+		table td {
+		padding: .625em;
+		text-align: center;
+		}
+
+		table th {
+		font-size: .85em;
+		letter-spacing: .1em;
+		text-transform: uppercase;
+		}
+
+		@media screen and (max-width: 600px) {
+		table {
+			border: 0;
+		}
+
+		table caption {
+			font-size: 1.3em;
+		}
+		
+		table thead {
+			border: none;
+			clip: rect(0 0 0 0);
+			height: 1px;
+			margin: -1px;
+			overflow: hidden;
+			padding: 0;
+			position: absolute;
+			width: 1px;
+		}
+		
+		table tr {
+			border-bottom: 3px solid #ddd;
+			display: block;
+			margin-bottom: .625em;
+		}
+		
+		table td {
+			border-bottom: 1px solid #ddd;
+			display: block;
+			font-size: .8em;
+			text-align: right;
+		}
+		
+		table td::before {
+			/*
+			* aria-label has no advantage, it won't be read inside a table
+			content: attr(aria-label);
+			*/
+			content: attr(data-label);
+			float: left;
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+		
+		table td:last-child {
+			border-bottom: 0;
+		}
+		}
+
+	</style>
+
+	<div class="login-page">
+		<div class="form">
+			<div class="register-form">
+				<input type="text" placeholder="Nome"/>
+				<input type="password" placeholder="Senha"/>
+				<input type="text" placeholder="Email"/>
+				<button>Criar</button>
+				<p class="message">
+					Já tem cadastro?
+					<a id="login-button" href="#">Fazer Login</a>
+				</p>
+			</div>
+
+			<div class="login-form">
+				<input type="text" id="email" value="teste@teste.com" placeholder="Email"/>
+				<input type="password" id="senha" placeholder="Senha"/>
+				<button onclick="login()">login</button>
+				<p class="message">
+					Não tem cadastro?
+					<a href="#" id="criar-conta">Criar Conta</a>
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="lista-de-tarefas-container esconder">
+		<div>
+			<input type="text" id="nova-tarefa-nome" placeholder="Nome"><br>
+			<input type="text" id="nova-tarefa-descricao" placeholder="Descrição"><br>
+			<input type="text" id="nova-tarefa-data" placeholder="Data"><br>
+			<select type="text" id="nova-tarefa-status" placeholder="Status">
+				<option value="1">Em andamento</option>
+				<option value="2">Concluido</option>
+			</select><br>
+			<button onclick="criarTarefa()">Criar Tarefa</button>
+		</div>
+		<br><br>
+		<table class="zigzag">
+			<thead>
+				<tr>
+					<th class="header">ID</th>
+					<th class="header">NOME</th>
+					<th class="header">DESCRICAO</th>
+					<th class="header">DATA</th>
+					<th class="header">STATUS</th>
+					<th class="header">AÇÔES</th>
+				</tr>
+			</thead>
+			<tbody id="tbody-tarefas">
+				
+			</tbody>
+		</table>
+	</div>
+	
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript">
+		$('.message a').click(function(){
+		   $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
+		});
+
+		var sessao = {};
+
+
+
+		var tarefas = [
+			{
+				'id': 1,
+				'nome': 'Ir no mercado',
+				'desc': 'ir no mercado comprar arroz',
+				'data': '03/10/2022',
+				'status': 'Não Iniciada',
+				'passos': [
+					'pegar o carro',
+					'ir ate o mercado',
+					{'teste': ['a']}
+				]
+			},
+			{
+				'id': 2,
+				'nome': 'Fazer almoço',
+				'desc': 'Fazer macarrao para o almoço',
+				'data': '03/10/2022',
+				'status': 'Em andamento'
+			},
+			{
+				'id': 3,
+				'nome': 'Fazer cafe da manha',
+				'desc': 'Fazer cuzcuz com ovo pro cafe da manha',
+				'data': '03/10/2022',
+				'status': 'Concluido'
+			},
+		];
+
+		var usuarios = [
+			{
+				id: 1,
+				nome: 'Teste de teste',
+				email: 'teste@teste.com',
+				senha: '123'
+			},
+			{
+				'id': 2,
+				'nome': 'Teste 2',
+				'email': 'teste2@teste.com',
+				'senha': '12345'
+			},
+			{
+				'id': 3,
+				'nome': 'Teste 3',
+				'email': 'teste3@teste.com',
+				'senha': '12345'
+			}
+		];
+
+		usuarios.push(
+			{
+				'id': 1,
+				'nome': 'Teste de teste',
+				'email': 'teste@teste.com',
+				'senha': '123'
+			}
+		);
+
+		function criarConta( ) {
+			this.preventDefault();
+			var nome = document.querySelector('#email').value;
+			console.log('email:', email);
+			var senha = document.querySelector('#senha').value;
+			usuarios.push(
+				{
+					'id': usuarios.length + 1,
+					'nome': nome,
+					'email': email,
+					'senha': senha,
+				}
+			);
+		}
+
+		function verificaEmailExiste() {
+
+		}
+
+		function login() {
+			
+			var email = document.querySelector('#email').value;
+			console.log('email:', email);
+			var senha = document.querySelector('#senha').value;
+			console.log('senha:', senha);
+
+			for (var i = 0; i < usuarios.length; i++) {
+				if (
+					usuarios[i].email == email &&
+					usuarios[i].senha == senha
+				) {
+					document.querySelector('.lista-de-tarefas-container').classList.remove("esconder");
+					mostrarTarefas('banana', 2);
+					$( '.login-page' ).hide();
+					return;
+				}
+			}
+
+			alert('Usuário ou senha incorreto, ou usuário não existe');
+		}
+
+		function mostrarTarefas(item1, item2) {
+			console.log(item1, item2);
+			for (let index = 0; index < tarefas.length; index++) {
+				var tarefa = 
+					'<tr id="tarefa-'+index+'">'+
+						'<td>'+tarefas[index].id+'</td>'+
+						'<td>'+tarefas[index].nome+'</td>'+
+						'<td>'+tarefas[index].desc+'</td>'+
+						'<td>'+tarefas[index].data+'</td>'+
+						'<td>'+tarefas[index].status+'</td>'+
+						'<td>'+
+							'<button id="'+index+'" onclick="concluirTarefa('+index+')"> Concluir Tarefa </button>'+
+							'<button id="'+index+'" onclick="excluirTarefa('+index+')"> Excluir Tarefa</button>'+
+						'</td>'+
+					'</tr>';
+				document.querySelector('#tbody-tarefas').innerHTML += tarefa;
+			}
+		}
+
+		function concluirTarefa(indexDaTarefa) {
+			console.log(indexDaTarefa, tarefas[indexDaTarefa]);
+			alert('fui clicado');
+		}
+
+		function excluirTarefa(indexDaTarefa) {
+			console.log(indexDaTarefa, tarefas[indexDaTarefa]);
+
+			console.log('tarefas antes: ', tarefas);
+			tarefas.splice(indexDaTarefa, 1);
+			$( '#tarefa-'+indexDaTarefa ).remove();
+			console.log('tarefas depois de remover: ', tarefas);
+		}
+
+		function deletarTarefa() {
+			//pesquisar como remover item do array javascript
+
+		}
+
+		function criarTarefa() {
+			var nome = document.querySelector('#nova-tarefa-nome').value;
+			var descricao = document.querySelector('#nova-tarefa-descricao').value;
+			var data = document.querySelector('#nova-tarefa-data').value;
+
+			console.log(nome, descricao, data);
+			// tarefas.push(
+			// 	{
+			// 		'id': tarefas.length + 1,
+			// 		'nome': nome,
+			// 		'desc': desc,
+			// 		'data': data,
+			// 		'status': motivo
+			// 	}
+			// );
+		}
+
+		function marcarTarefaComoConcluida( idTarefa ) {
+			
+		}
+
+	</script>
+</body>
+</html>

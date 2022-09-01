@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Lista de tarefas</title>
+        <!-- Link externo JS -->
+        <script src="js/script.js" defer></script>
+        <link rel="stylesheet" href="css/estilo.css">
+        <link rel="icon" href="img/logo.svg">
+        <!-- LINK PARA ICONES FONTS AWESOME -->
+        <link rel="stylesheet" href="fontawesome-free-6.1.2-web/css/all.min.css">
+    </head>
+    <body> <!--onload="carregaUsuarios()"-->
+        <main id="container">
+             <section id="secaoLogin">
+
+                <form class="login" >
+
+                    <i style="font-size:4em ;margin-bottom:1%;" class="fa-solid fa-user" ></i>
+                    <div class="inputComIcon">
+                        <input type="email" placeholder="Digite o seu email" id="nameLogin">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                    <div class="inputComIcon iconPassword">
+                        <input type="password" placeholder="Digite a sua senha" id="senhaLogin">
+                        <i id="iconLogin" class="fa-solid fa-eye-slash" onclick="verSenha()"></i>
+                    </div>
+                   
+                    <button onclick="loginUsuario()">Login</button>
+                    <p>É novo por aqui?<a href="#"onclick="fazerCadastro()">Criar Conta</a></p>
+                </form>
+            </section>
+
+            <section id="secaoCadastro" >
+                
+                <form class="login">
+
+                    <i style="font-size:4em ;margin-bottom:1%;" class="fa-solid fa-user" ></i>
+                    <div class="inputComIcon">
+                        <input type="text" placeholder="Insira o seu Nome" id="nomeCadastro">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    
+                    <div class="inputComIcon iconPassword">
+                        <input type="password" placeholder="Insira uma Senha " id="senhaCadastro">
+                        <i id="iconCadastro" class="fa-solid fa-eye-slash" onclick="verSenha()"></i>
+                    </div>
+
+                    <div class="inputComIcon">
+                        <input type="email" placeholder="Insira um Email válido" id="emailCadastro">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                   
+                    <button onclick="novoCadastro()">Cadastrar</button>
+                    <p>Já tem cadastro?<a href="" onclick="fazerLogin()">Fazer login</a></p>
+                </form>
+            </section>
+            <section id="tarefas" style="display:none ;">
+                <h2>Area do cadastro das despesas</h2>
+            </section>
+            <!-- <section style="position: relative;">
+                <input type="text" placeholder="Digite seu login">
+                <i class="fa-solid fa-eye"></i>
+            </section>
+              -->
+        </main>
+        
+    </body>
+</html>
