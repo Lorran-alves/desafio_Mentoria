@@ -91,6 +91,7 @@ function loginUsuario(){
      }else{
       alert("digite os campos corretamente")
      }
+  
 }
 
 
@@ -152,5 +153,15 @@ function verSenha(){
    }else{
       iconCadastro.setAttribute("class", "fa-solid fa-eye")
       campoCadastro.type = "text"
+   }
+}
+//MENU DO HEADER 
+function verMenu(){
+   lista = document.querySelector("#ul_menu")
+   if(lista.style.display == "block"){
+      lista.style.display = "none"
+   }
+   else{
+      lista.style.display = "block"
    }
 }

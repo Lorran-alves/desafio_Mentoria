@@ -9,13 +9,57 @@
             <!-- Link externo JS -->
             <script src="js/script.js" defer></script>
             <link rel="stylesheet" href="css/estilo.css">
+            <link rel="stylesheet" href="css/estilo_tarefas.css">
             <link rel="icon" href="img/logo.svg">
             <!-- LINK PARA ICONES FONTS AWESOME -->
             <link rel="stylesheet" href="fontawesome-free-6.1.2-web/css/all.min.css">
         </head>
     </head>
     <body>
-        olaasdsd
+        <main>
+            <header>
+              
+                <section class="tituloPrincipal_header"> 
+                    <i class="fa-solid fa-house"></i>
+                    <h1> Olá Lorran</h1>
+                    
+                </section>
+                
+                    <i class="fa-solid fa-bars" onclick="verMenu()"></i>  
+                
+                    <ul id="ul_menu" style="display: none;">
+                        <li>
+                            <a href="">Editar Conta<i class="fa-solid fa-pen"></i></a>
+                        </li>
+                        <li>
+                            <a href="">Excluir conta <i class="fa-solid fa-trash"></i></a>
+                        </li>
+                        <li>
+                            <a href="">Sair <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+                        </li>
+                    </ul>         
+            </header>
+            <section id="cadastroTarefas">
+                <h1 style="text-align: center; font-size: 1.4em;">Cadastrar Tarefas</h1>
+                <section >
+                    <form action="">
+                        <input type="text" placeholder="Nome">
+                        <input type="date">
+                        <select>
+                            <optgroup>
+                                <option value="" selected disabled>Status</option>
+                                <option value="">Em Andamento</option>
+                                <option value="">Concluida</option>
+                            </optgroup>
+                        </select>                        
+                            <input type="text" placeholder="Descrição" id="descricao">
+                            <i class="fa-solid fa-plus edit_icon"></i>
+                      
+                    </form>
+                </section>
+            </section>
+        </main>
+        
             
     </body>
 </html>
