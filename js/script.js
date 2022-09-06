@@ -51,11 +51,12 @@ class Usuario{
    }
     login(){
       let usuario = this.verificaDadosLogin()// VAI DEVOLVER OS DADOS JÁ EM SÓ ARRAY
-
+      
       if(usuario.length == 1){
          alert("login aceito")
-         document.getElementById("secaoLogin").style.display= "none"  
-         document.querySelector("#tarefas").style.display = "block"
+         localStorage.setItem("id_usuario", usuario[0].id)
+
+         location.assign("tarefas.html")
       }
       else{
          alert("email ou senha inválidas")
@@ -63,7 +64,8 @@ class Usuario{
    }
 }
  // TESTE PARA VERIFICAR SE O EMAIL FOI DIGITADO CORRETAMENTE
-   
+
+
 function validateEmail(emails) {//FUNÇÃO PARA VERIFICAR SE O EMAIL É VÁLIDO
    let verifica = /\S+@\S+\.\S+/;
    return verifica.test(emails);
@@ -87,53 +89,22 @@ function loginUsuario(){
      if(  senha != '' && validateEmail(email) == true){
       let usuarios = new Usuario( '', senha, email)
       usuarios.login()
-      console.log('final')
      }else{
       alert("digite os campos corretamente")
      }
-  
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//  function login(email,senha,login,senhaArea){
-//     console.log(email,senha,loginArea,senhaArea)
-//     login.style.display = "none"
-//     senhaArea.style.display = "none"
-// }
-
-function fazerCadastro(){
-   secaoLogin.style.display = 'none'
-   document.getElementById("secaoCadastro").style.display = "block"
+function mudaCampo(){ //vou mudar aqui
+   let secaoLogin = document.querySelector("#secaoLogin")
+   let secaoCadastro = document.querySelector("#secaoCadastro")
+    secaoLogin.style.display == ""?secaoLogin.style.display = 'flex': secaoLogin.style.display = 'none'
+   if( secaoLogin.style.display === "flex"){
+      secaoCadastro.style.display = "block"
+      secaoLogin.style.display = "none"
+   }else{
+      secaoCadastro.style.display = "none"
+      secaoLogin.style.display = "flex"
+   }
 }
-// function fazerLogin(){
-//    document.getElementById("secaoCadastro").style.display = "none"
-//    secaoLogin.style.display = 'block'
-// }
-
-
-
-
-
 function verSenha(){
    let campoLogin = document.querySelector("#senhaLogin")
    let campoCadastro = document.querySelector("#senhaCadastro")
@@ -155,6 +126,8 @@ function verSenha(){
       campoCadastro.type = "text"
    }
 }
+
+// SCRIPTS DA AREA DE TAREFAS
 //MENU DO HEADER 
 function verMenu(){
    lista = document.querySelector("#ul_menu")
@@ -163,5 +136,98 @@ function verMenu(){
    }
    else{
       lista.style.display = "block"
+   }
+}
+// SEÇÃO DO CARREGAMENTO DAS TAREFAS
+
+class Tarefas {
+   constructor(dia, data, descricao, status, id){
+      this.dia = dia
+      this.data = data
+      this.descricao = descricao 
+      this.status = status
+      this.id_usuario = "usuario_"+id+"_"
+
+      this.id_tarefa = localStorage.getItem('id_tarefa')
+      if(this.id_tarefa == null){
+         localStorage.setItem("id_tarefa",1)
+         this.id_tarefa = localStorage.getItem('id_tarefa')
+         console.log(this.id_tarefa)
+      }
+      console.log(this.id_tarefa)
+   }
+   proximoId(){
+      this.id_tarefa++
+      localStorage.setItem("id_tarefa",this.id_tarefa)
+   }
+
+   setTarefa(t){
+      localStorage.setItem(this.id_usuario+this.id_tarefa, JSON.stringify(t))
+      this.proximoId()
+      this.getTarefas()
+   }
+   getTarefas(){
+      let tarefa = []
+      let tbody = document.getElementById("tbody")
+      tbody.innerText = ''
+      for(let i = 0; i< this.id_tarefa;i++){
+         let tarefaString = localStorage.getItem(this.id_usuario+i)
+         let tarefaObjeto = JSON.parse(tarefaString)
+         
+         console.log(tarefaObjeto)
+         if(tarefaObjeto != null){
+            tarefa = tarefaObjeto
+            console.log(tarefaObjeto.dia)
+
+            let tr = tbody.insertRow()
+
+            let td_dia = tr.insertCell()
+            let td_data = tr.insertCell()
+            let td_descricao = tr.insertCell()
+            let td_status= tr.insertCell()
+            let td_acao = tr.insertCell()
+            
+            td_dia.innerText = tarefaObjeto.dia
+            // td_data.innerText = 'teste'
+            // td_descricao.innerText = 'teste'
+            // td_status.innerText = 'teste'
+            // td_acao.innerText = 'teste'
+            }
+        
+      }
+      console.log(tarefa)
+   }
+
+}
+
+function carregaTarefas(){
+      let id = localStorage.getItem('id_usuario')
+      let usuario = localStorage.getItem("usuario_"+id+"_")
+      let usuario_objeto = JSON.parse(usuario)
+      const titulo = document.querySelector("#titulo")
+      titulo.innerText = "Olá, " + usuario_objeto.nome   
+}
+function adicionarTarefa(){
+   const status = document.querySelector("#select_status").value
+   const dia = document.querySelector("#dia_semana").value
+   const descricao = document.querySelector("#descricao").value
+
+   // DATA
+   const dia_mes = document.querySelector("#dia_mes").value
+   const mes = document.querySelector("#mes").value
+   const ano = document.querySelector("#ano").value
+   const data = `${dia_mes}/${mes}/${ano}`
+   //DATA PRONTA 
+
+   if(status != '' && dia != '' && descricao != '' && dia_mes != '' && mes != '' && data != ''){
+      let id = localStorage.getItem("id_usuario") //RESGATANDO O ID DO USUARIO DE ACORDO COM O SEU CADASTRO
+      let tarefa = new Tarefas(dia, data, descricao, status, id)
+       tarefa.getTarefas(tarefa)
+       alert("adicionado com sucesso")
+       document.querySelector('.button').type = "reset" //SERVE PARA REINICIAR OS VALORES PARA 0 
+   }
+   else{
+      document.querySelector('.button').type = "button" // VOLTANDO AO ESTADO NORMAL PARA SE ERRAR NÃO PREENCHER TUDO NOVAMENTE
+      alert("Verifique se todos os campos foram preenchidos corretamente")
    }
 }

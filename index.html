@@ -13,9 +13,8 @@
         <link rel="stylesheet" href="fontawesome-free-6.1.2-web/css/all.min.css">
     </head>
     <body> <!--onload="carregaUsuarios()"-->
-        <main id="container">
-
-             <section id="secaoLogin">
+        <main id="container">  
+            <section id="secaoLogin">    
                 <form class="login">
                     <i style="font-size:4em ;margin-bottom:1%;" class="fa-solid fa-user" ></i>
                     <div class="inputComIcon">
@@ -28,9 +27,11 @@
                         <i id="iconLogin" class="fa-solid fa-eye-slash" onclick="verSenha()"></i>
                     </div>
 
-                    <button onclick="loginUsuario()">Login</button>
-                    <p>É novo por aqui?<a href="#"onclick="fazerCadastro()">Criar Conta</a></p>
+                    
                 </form>
+
+                <button onclick="loginUsuario()">Login</button>
+                <p>É novo por aqui?<a href="#"onclick="mudaCampo()">Criar Conta</a></p>
             </section>
 
             <section id="secaoCadastro" >
@@ -52,7 +53,7 @@
                     </div>
                    
                     <button onclick="novoCadastro()">Cadastrar</button>
-                    <p>Já tem cadastro?<a href="" onclick="fazerLogin()">Fazer login</a></p>
+                    <p>Já tem cadastro?<a href="" onclick="mudaCampo()">Fazer login</a></p>
                 </form>
             </section>
             <section id="tarefas" style="display:block ;">
