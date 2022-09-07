@@ -16,14 +16,18 @@ class Usuario{
    verificarDados(){//RETORNA UM ARRAY COM TODOS OS DADOS DE USUARIOS EXISTENTES
       let usuario_array =[]
       for(let i = 1; i < this.id;i++){
-         let usuarioString = localStorage.getItem('usuario_'+i+'_')
-         let usuario_Obj = JSON.parse(usuarioString)
-         usuario_array.push(usuario_Obj)
+         //VERIFICA SE EXISTE OU NÃO ALGUMA CONTA CADASTRADA
+         if(localStorage.getItem('usuario_'+i+'_') != null){ 
+            let usuarioString = localStorage.getItem('usuario_'+i+'_')
+            let usuario_Obj = JSON.parse(usuarioString)
+            usuario_array.push(usuario_Obj)
+         }
       }
       return usuario_array
    }
    verificaDadosCadastro(){
       let usuarios = this.verificarDados()
+      
       let usuarioFiltradoNome = usuarios.filter(u => u.nome == this.nome) 
       let usuarioDadosFiltrado = usuarios.filter(u => u.email == this.email)
       if(usuarioFiltradoNome.length >= 1){
@@ -37,25 +41,22 @@ class Usuario{
       return true
    }
    verificaDadosLogin(){
-      let usuario = this.verificarDados()
+      let usuario = this.verificarDados()   
       let usuarioFiltrado = usuario.filter(u => u.email == this.email && u.senha == this.senha)
-      console.log(usuarioFiltrado)
       return usuarioFiltrado
-
    }
    setUsuario(u){
       if(this.verificaDadosCadastro()){//SÓ IRÁ ADICIONAR CASO O USUARIO AINDA NÃO POSSUIR CADASTRO
          localStorage.setItem('usuario_'+this.id+'_',JSON.stringify(u))
          this.incrementoId()
+         alert("CADASTRO REALIZADO COM SUCESSO!")
       }
    }
     login(){
       let usuario = this.verificaDadosLogin()// VAI DEVOLVER OS DADOS JÁ EM SÓ ARRAY
       
       if(usuario.length == 1){
-         alert("login aceito")
          localStorage.setItem("id_usuario", usuario[0].id)
-
          location.assign("tarefas.html")
       }
       else{
@@ -110,6 +111,7 @@ function verSenha(){
    let campoCadastro = document.querySelector("#senhaCadastro")
    let iconCadastro = document.querySelector("#iconCadastro")
    let iconLogin = document.querySelector("#iconLogin")
+  
    if(iconLogin.className === 'fa-solid fa-eye'){
       iconLogin.setAttribute("class", "fa-solid fa-eye-slash")
       campoLogin.type  = "password"
@@ -121,9 +123,23 @@ function verSenha(){
    if(iconCadastro.className === 'fa-solid fa-eye'){
       iconCadastro.setAttribute("class", "fa-solid fa-eye-slash")
       campoCadastro.type  = "password"
+
    }else{
       iconCadastro.setAttribute("class", "fa-solid fa-eye")
       campoCadastro.type = "text"
+   }
+     
+}
+function verSenhaDadosNovos(){
+   let iconDadosNovos = document.querySelector("#dadosNovos")
+   let camposDadosNovos = document.querySelector("#senhaNova")
+   //SEÇÃO DADOS NOVOS
+   if(iconDadosNovos.className === 'fa-solid fa-eye'){
+      iconDadosNovos.setAttribute("class", "fa-solid fa-eye-slash")
+      camposDadosNovos.type  = "password"
+   }else{
+      iconDadosNovos.setAttribute("class", "fa-solid fa-eye")
+      camposDadosNovos.type = "text"
    }
 }
 
@@ -148,13 +164,23 @@ class Tarefas {
       this.status = status
       this.id_usuario = "usuario_"+id+"_"
 
+      // LEMBRA DE TIRAR O ID DAS CHAMADAS DAS FUNÇÕES POIS ELE JA ESTÁ SENDO RESGATADO AQUI
+
+
+      if(id == undefined){ 
+         let id = localStorage.getItem("id_usuario") 
+         this.id_usuario = "usuario_"+id+"_"
+      }
       this.id_tarefa = localStorage.getItem('id_tarefa')
       if(this.id_tarefa == null){
-         localStorage.setItem("id_tarefa",1)
+         localStorage.setItem("id_tarefa",0)
          this.id_tarefa = localStorage.getItem('id_tarefa')
-         console.log(this.id_tarefa)
       }
-      console.log(this.id_tarefa)
+   }
+   recuperaDados(){
+      let usuarioString = localStorage.getItem(this.id_usuario)
+      let dadosUsuarios = JSON.parse(usuarioString)
+      return dadosUsuarios
    }
    proximoId(){
       this.id_tarefa++
@@ -164,48 +190,145 @@ class Tarefas {
    setTarefa(t){
       localStorage.setItem(this.id_usuario+this.id_tarefa, JSON.stringify(t))
       this.proximoId()
-      this.getTarefas()
+      this.mostrarTarefas()
    }
    getTarefas(){
-      let tarefa = []
+      let tarefas = []
       let tbody = document.getElementById("tbody")
       tbody.innerText = ''
-      for(let i = 0; i< this.id_tarefa;i++){
-         let tarefaString = localStorage.getItem(this.id_usuario+i)
+      for(let i = 0; i < Number(this.id_tarefa);i++){
+         let tarefaString = localStorage.getItem(this.id_usuario+i)  
          let tarefaObjeto = JSON.parse(tarefaString)
-         
-         console.log(tarefaObjeto)
-         if(tarefaObjeto != null){
-            tarefa = tarefaObjeto
-            console.log(tarefaObjeto.dia)
-
+         tarefas.push(tarefaObjeto)       
+      }
+     return tarefas
+   }
+   mostrarTarefas(){
+      let tarefas = this.getTarefas()
+      let tbody = document.getElementById("tbody")
+      tbody.innerText = ''
+      for(let i = 0; i < Number(this.id_tarefa);i++){
+         if(tarefas[i] != null){ //AQUI EU FILTRO OS DADOS QUE O INDECE NÃO EXISTE
             let tr = tbody.insertRow()
-
             let td_dia = tr.insertCell()
             let td_data = tr.insertCell()
             let td_descricao = tr.insertCell()
             let td_status= tr.insertCell()
-            let td_acao = tr.insertCell()
-            
-            td_dia.innerText = tarefaObjeto.dia
-            // td_data.innerText = 'teste'
-            // td_descricao.innerText = 'teste'
-            // td_status.innerText = 'teste'
-            // td_acao.innerText = 'teste'
+            let td_acao = tr.insertCell()        
+            td_dia.innerText = tarefas[i].dia
+            td_data.innerText = tarefas[i].data
+            td_descricao.innerText = tarefas[i].descricao
+            td_status.innerText = tarefas[i].status
+            //AQUI EU ESTOU INSERINDO A COR DE FUNDO DE CADA LINHA
+            // tr.setAttribute('id',i)
+            if(tarefas[i].status == "Concluida"){
+               tr.style.backgroundColor = "rgb(205, 212, 212)"
+            }else{
+               tr.style.backgroundColor = "white"
             }
-        
-      }
-      console.log(tarefa)
+            // CRIANDO OS ICONES DE AÇÃO 
+            // CONCLUIR
+            let concluir_icon = document.createElement("i")
+            concluir_icon.setAttribute("class","fa-regular fa-square-check")
+            concluir_icon.setAttribute("onclick", `concluirTarefa(${i})`)
+            td_acao.appendChild(concluir_icon)
+            //EDITAR
+            let editar_icon = document.createElement("i")
+            editar_icon.setAttribute("class","fa-solid fa-pen")
+            editar_icon.setAttribute("onclick", `editarTarefa(${i})`)
+            td_acao.appendChild(editar_icon)
+            //REMOVER  
+            let remover_icon = document.createElement("i")
+            remover_icon.setAttribute("class","fa-solid fa-trash")
+            remover_icon.setAttribute("onclick", `removerTarefa(${i})`)
+            td_acao.appendChild(remover_icon)
+         }
+      }     
    }
-
+   // CONCLUINDO A TAREFA
+   concluirTarefa(indece){
+      let tarefaString = localStorage.getItem(this.id_usuario+indece)
+      let tarefaObjeto = JSON.parse(tarefaString)
+      // AQUI IRÁ MUDAR O STATUS DE ACORDO QUE O USUARIO FOR CLICANDO
+      tarefaObjeto.status == "Concluida"?tarefaObjeto.status ="Em Andamento":tarefaObjeto.status = "Concluida"
+      localStorage.setItem(this.id_usuario+indece, JSON.stringify(tarefaObjeto))
+      this.mostrarTarefas()
+   }
+   removerTarefa(indece){
+      localStorage.removeItem(this.id_usuario+indece)//REMOVENDO
+      location.reload()//RELOGANDO A PAGINA PARA SUMIR A LINHA DA TABELA ATUAL
+   }
+   //DELETANDO A CONTA E TODOS OS DADOS NELA EXISTENTES
+   deletarConta(){
+      localStorage.removeItem(this.id_usuario)
+      localStorage.removeItem('id_tarefa')
+      for (let i = 0; i < this.id_tarefa; i++) {
+         localStorage.removeItem(this.id_usuario+i)
+      }
+      location.replace("index.html")
+   }
+   salvarNovosDados(){
+     let dadosUsuarios = this.recuperaDados()
+     let nome = document.querySelector('#nomeNovo').value
+     let senha = document.querySelector("#senhaNova").value
+      if(nome != '' && senha != ''){
+         dadosUsuarios.nome = nome
+         dadosUsuarios.senha = senha
+         localStorage.setItem(this.id_usuario, JSON.stringify(dadosUsuarios))
+         location.replace("index.html")
+      }
+   }
 }
+
+function excluirConta(){
+   let tarefa = new Tarefas()
+      tarefa.deletarConta()
+}
+function sairDaConta(){
+   location.replace("index.html")
+}
+function editarConta(){
+   location.replace("altera_dados.html")
+}
+// QUANDO A PAGINA É CARREGADA OS DADOS DO EMAIL SÃO TRATADOS E JOGADOS NA TELA
+function recuperarDadosNovos(){
+   let tarefa = new Tarefas()
+   let dadosUsuarios = tarefa.recuperaDados()
+   let email = document.querySelector('#novoEmail')
+   email.value = dadosUsuarios.email
+}
+function salvarDados(){
+   let tarefa = new Tarefas()
+   tarefa.salvarNovosDados()
+}
+// function editarTarefa(){
+//    location.replace("altera_dados.html")
+// }
+// function editarDadosTarefa(){
+//    let tarefa = new Tarefas()
+//    tarefa.editarDadosTarefa()
+// }
 
 function carregaTarefas(){
       let id = localStorage.getItem('id_usuario')
       let usuario = localStorage.getItem("usuario_"+id+"_")
       let usuario_objeto = JSON.parse(usuario)
-      const titulo = document.querySelector("#titulo")
-      titulo.innerText = "Olá, " + usuario_objeto.nome   
+      if(usuario_objeto != null){
+         const titulo = document.querySelector("#titulo")
+         titulo.innerText = "Olá, " + usuario_objeto.nome 
+         let tarefa = new Tarefas()
+         tarefa.mostrarTarefas()
+      }  
+}
+// REMOVENDO TAREFA
+function  removerTarefa(i){
+   let tarefa = new Tarefas()
+   tarefa.removerTarefa(i)
+}
+// CONCLUINDO A TAREFA
+function concluirTarefa(i){
+   let tarefa = new Tarefas()
+   tarefa.concluirTarefa(i)
 }
 function adicionarTarefa(){
    const status = document.querySelector("#select_status").value
@@ -219,10 +342,12 @@ function adicionarTarefa(){
    const data = `${dia_mes}/${mes}/${ano}`
    //DATA PRONTA 
 
+  
+
    if(status != '' && dia != '' && descricao != '' && dia_mes != '' && mes != '' && data != ''){
       let id = localStorage.getItem("id_usuario") //RESGATANDO O ID DO USUARIO DE ACORDO COM O SEU CADASTRO
       let tarefa = new Tarefas(dia, data, descricao, status, id)
-       tarefa.getTarefas(tarefa)
+      tarefa.setTarefa(tarefa)
        alert("adicionado com sucesso")
        document.querySelector('.button').type = "reset" //SERVE PARA REINICIAR OS VALORES PARA 0 
    }

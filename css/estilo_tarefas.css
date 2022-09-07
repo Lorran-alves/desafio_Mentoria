@@ -127,11 +127,16 @@ margin-top: 0;
 /* TABELA DAS TAREFAS */
 
 #table_tarefas table{
-
     width: 100%;
     font-size: 0.8em;
     text-align: center;
     border-collapse: collapse;
+    box-sizing: border-box;
+    margin: auto;
+}
+#table_tarefas{
+    box-sizing: border-box;
+    width:100%;
 }
 #table_tarefas  th{
     border-bottom: 2px solid gainsboro;
@@ -142,10 +147,12 @@ margin-top: 0;
 
 #table_tarefas tr{
     border-bottom: 2px solid gainsboro;
+    box-sizing: border-box;
 }
 #table_tarefas i{
     cursor: pointer;
-    color: #606060;
+    color: #444343;
+    padding: 4%;
 }
 #table_tarefas i:hover{
     color: #888888;
@@ -159,3 +166,4 @@ select{
 #formulario{
     text-align:center;
 }
+
