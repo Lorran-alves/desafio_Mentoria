@@ -13,33 +13,9 @@
         <!-- LINK PARA ICONES FONTS AWESOME -->
         <link rel="stylesheet" href="fontawesome-free-6.1.2-web/css/all.min.css">
     </head>
-    <body onload="recuperarDadosNovos()"> <!--onload="carregaUsuarios()"-->
+    <body>
         <main id="container">  
-            <section id="secaoCadastro" style="display: none;">
-                <form class="CadastroUsuario">
-
-                    <i style="font-size:4em ;margin-bottom:1%;" class="fa-solid fa-user" ></i>
-                    <div class="inputComIcon">
-                        <input type="text" placeholder="Insira o seu novo Nome" id="nomeNovo">
-                        <i class="fa-solid fa-user"></i>
-                    </div>
-                    
-                    <div class="inputComIcon iconPassword">
-                        <input type="password" placeholder="Insira sua nova Senha " id="senhaNova">
-                        <i id="dadosNovos" class="fa-solid fa-eye-slash" onclick="verSenhaDadosNovos()"></i>
-                    </div>
-                    <div class="inputComIcon">
-                        <input type="email" disabled id="novoEmail">
-                        <i class="fa-solid fa-envelope"></i>
-                    </div>
-                   
-                    
-                </form>
-                <button onclick="salvarDados()" >Salvar</button>
-                    <p>Deseja cancelar alterações?<a href="" onclick="mudaCampo()">Cancelar</a></p>
-            </section>
-
-            <section id="cadastroTarefas">
+            <section id="alteraTarefa" class="alteraTarefa">
                 <h1 style="text-align: center; font-size: 1.4em;">Alterar Tarefa</h1>
                 <section id="formulario">
                     <form action="">
@@ -89,8 +65,8 @@
                             </optgroup>
                         </select>                        
                         <section id="linha_button_novo">
-                            <input type="text" placeholder="Descrição" id="descricao">
-                            <button onclick="editarTarefaIcon()" class="button" type="button"><i class="fa-solid fa-pen" style="color:white;"></i></button>
+                            <input type="text" placeholder="Descrição" id="descricao_nova">
+                            <button onclick="editarTarefaAtual()" class="button" type="button"><i class="fa-solid fa-pen" style="color:white;"></i></button>
                         </section>
                     </form>
                 </section>

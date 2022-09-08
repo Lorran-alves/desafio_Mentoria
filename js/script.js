@@ -57,7 +57,7 @@ class Usuario{
       
       if(usuario.length == 1){
          localStorage.setItem("id_usuario", usuario[0].id)
-         location.assign("tarefas.html")
+         location.replace("tarefas.html")
       }
       else{
          alert("email ou senha inválidas")
@@ -82,6 +82,7 @@ function novoCadastro(){
    }
    console.log('aqui')
 }
+
 // let secaoLogin = document.querySelector("#secaoLogin")
 
 function loginUsuario(){
@@ -94,6 +95,7 @@ function loginUsuario(){
       alert("digite os campos corretamente")
      }
 }
+
 function mudaCampo(){ //vou mudar aqui
    let secaoLogin = document.querySelector("#secaoLogin")
    let secaoCadastro = document.querySelector("#secaoCadastro")
@@ -163,19 +165,17 @@ class Tarefas {
       this.descricao = descricao 
       this.status = status
       this.id_usuario = "usuario_"+id+"_"
-
+      this.id_tarefa = ''
       // LEMBRA DE TIRAR O ID DAS CHAMADAS DAS FUNÇÕES POIS ELE JA ESTÁ SENDO RESGATADO AQUI
-
-
       if(id == undefined){ 
          let id = localStorage.getItem("id_usuario") 
          this.id_usuario = "usuario_"+id+"_"
       }
-      this.id_tarefa = localStorage.getItem('id_tarefa')
-      if(this.id_tarefa == null){
-         localStorage.setItem("id_tarefa",0)
+      if(this.id_tarefa == ''){//FIZ ISSO PARA QUE NA CHAMADA DA FUNÇÃO ELE JA RECEBER O VALOR CORRETO
+         this.recuperaIdTarefa()
          this.id_tarefa = localStorage.getItem('id_tarefa')
       }
+
    }
    recuperaDados(){
       let usuarioString = localStorage.getItem(this.id_usuario)
@@ -186,10 +186,10 @@ class Tarefas {
       this.id_tarefa++
       localStorage.setItem("id_tarefa",this.id_tarefa)
    }
-
    setTarefa(t){
+      
       localStorage.setItem(this.id_usuario+this.id_tarefa, JSON.stringify(t))
-      this.proximoId()
+      this.proximoId()//ELE VEIO PRIMEIRO PARA FAZER O INCREMENTO DO ID ANTES DE ADIOCIOANR
       this.mostrarTarefas()
    }
    getTarefas(){
@@ -220,7 +220,6 @@ class Tarefas {
             td_descricao.innerText = tarefas[i].descricao
             td_status.innerText = tarefas[i].status
             //AQUI EU ESTOU INSERINDO A COR DE FUNDO DE CADA LINHA
-            // tr.setAttribute('id',i)
             if(tarefas[i].status == "Concluida"){
                tr.style.backgroundColor = "rgb(205, 212, 212)"
             }else{
@@ -278,6 +277,20 @@ class Tarefas {
          location.replace("index.html")
       }
    }
+   editarDadosTarefa(tarefaAtual){
+      let id_tarefaAtual = localStorage.getItem("id_tarefa_atual") // AQUI EU RESGATEI O ID ATUAL PARA DAI EDITAR A TAREFA
+      localStorage.setItem(this.id_usuario+id_tarefaAtual, JSON.stringify(tarefaAtual))
+      location.replace("tarefas.html")
+   }
+   recuperaIdTarefa(){ //IRÁ RECUPERAR O ID DE ONDE ELE PAROU PARA DAI SER RESGATADO TODAS AS TAREFAS ANTERIORMENTE REGISTRADAS
+      let id = 0
+      for(let i = 0 ; i <20  ;i++){
+          if(localStorage.getItem(this.id_usuario+i) != null){
+            id = i
+          }
+      }
+      localStorage.setItem("id_tarefa",id+1)
+   }
 }
 
 function excluirConta(){
@@ -288,9 +301,9 @@ function sairDaConta(){
    location.replace("index.html")
 }
 function editarConta(){
-   location.replace("altera_dados.html")
+   location.replace("altera_dados_usuario.html")
 }
-// QUANDO A PAGINA É CARREGADA OS DADOS DO EMAIL SÃO TRATADOS E JOGADOS NA TELA
+// QUANDO A PAGINA É CARREGADA OS DADOS DO EMAIL SÃO TRATADOS E JOGADOS NA TELA PARA FICAR DENTRO DO INPUT
 function recuperarDadosNovos(){
    let tarefa = new Tarefas()
    let dadosUsuarios = tarefa.recuperaDados()
@@ -301,13 +314,28 @@ function salvarDados(){
    let tarefa = new Tarefas()
    tarefa.salvarNovosDados()
 }
-// function editarTarefa(){
-//    location.replace("altera_dados.html")
-// }
-// function editarDadosTarefa(){
-//    let tarefa = new Tarefas()
-//    tarefa.editarDadosTarefa()
-// }
+function editarTarefa(indece){
+   localStorage.setItem("id_tarefa_atual", indece)
+   location.replace("altera_dados_tarefa.html")
+   document.querySelector("#secaoNovosDados").style.display = "none"
+   document.querySelector("#alteraTarefa").style.display = "block"
+}
+function editarTarefaAtual(){
+   const dia_mes = document.querySelector("#dia_mes_novo").value
+   const mes = document.querySelector("#mes_novo").value
+   const ano = document.querySelector("#ano_novo").value
+   const dia_semana = document.querySelector("#dia_semana_novo").value
+   const status = document.querySelector("#select_status_novo").value
+   const descricao = document.querySelector("#descricao_nova").value
+   if(dia_mes != '' && mes != '' &&  ano != '' &&  dia_semana != '' &&  status != '' &&  dia_mes != '' && descricao != ''){
+      const data = `${dia_mes}/${mes}/${ano}`
+      let tarefa = new Tarefas(dia_semana, data, descricao, status)
+      tarefa.editarDadosTarefa(tarefa)
+   }
+}
+function cancelarEdicao(){
+   location.replace("tarefas.html")
+}
 
 function carregaTarefas(){
       let id = localStorage.getItem('id_usuario')

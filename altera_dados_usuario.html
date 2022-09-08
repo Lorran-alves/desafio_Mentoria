@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>tarefas</title>
+        <!-- Link externo JS -->
+        <script src="js/script.js" defer></script>
+        <link rel="stylesheet" href="css/estilo.css">
+        <link rel="stylesheet" href="css/estilo_tarefas.css">
+        <link rel="icon" href="img/logo.svg">
+        <!-- LINK PARA ICONES FONTS AWESOME -->
+        <link rel="stylesheet" href="fontawesome-free-6.1.2-web/css/all.min.css">
+    </head>
+    <body onload="recuperarDadosNovos()"> <!--onload="carregaUsuarios()"-->
+        <main id="container">  
+            <section id="secaoNovosDados"> 
+                <form class="CadastroUsuario">
+
+                    <i style="font-size:4em ;margin-bottom:1%;" class="fa-solid fa-user" ></i>
+                    <div class="inputComIcon">
+                        <input type="text" placeholder="Insira o seu novo Nome" id="nomeNovo">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    
+                    <div class="inputComIcon iconPassword">
+                        <input type="password" placeholder="Insira sua nova Senha " id="senhaNova">
+                        <i id="dadosNovos" class="fa-solid fa-eye-slash" onclick="verSenhaDadosNovos()"></i>
+                    </div>
+                    <div class="inputComIcon">
+                        <input type="email" disabled id="novoEmail">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                </form>
+                <button onclick="salvarDados()" >Salvar</button>
+                    <p>Deseja cancelar alterações?<a href="#" onclick="cancelarEdicao()">Cancelar</a></p>
+            </section>
+        </main> 
+    </body>
+</html>

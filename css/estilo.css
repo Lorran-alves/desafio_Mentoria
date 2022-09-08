@@ -16,7 +16,8 @@ body{
 }
 /* ESTILIZANDO A SEÇÃO DO FORMULARIO PARA O LOGIN */
 #secaoLogin,
-#secaoCadastro{
+#secaoCadastro,
+#secaoNovosDados{
     margin: auto;
     display: flex;
     flex-direction:column ;
@@ -30,6 +31,16 @@ body{
     align-items: center;
     padding: 2%;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+#secaoNovosDados{
+    width: 35%;
+} 
+#secaoNovosDados p{
+font-size: 0.7em;
+}
+#secaoNovosDados a{
+    font-size: 1em;
+    margin-left: 2px;
 }
 form{
     display: flex;

@@ -30,7 +30,7 @@
                     
                 </form>
 
-                <button onclick="loginUsuario()">Login</button>
+                <button onclick="loginUsuario()" id="teste_modal">Login</button>
                 <p>É novo por aqui?<a href="#"onclick="mudaCampo()">Criar Conta</a></p>
             </section>
 
@@ -55,12 +55,75 @@
                     <button onclick="novoCadastro()">Cadastrar</button>
                     <p>Já tem cadastro?<a href="" onclick="mudaCampo()">Fazer login</a></p>
                 </form>
+            </section> 
+            <button onclick="teste()">abrir</button>
+            <section id="corDeFundo" class="modal"> </section>
+            <section id="modal" class="modal">
+                <section id="modal_header">
+                    <h1>Cadastrado com Sucesso</h1>
+                </section>
+                <section id="modal_body">
+                    <p>Cadastro realizado com sucesso</p>
+                    <button>Fechar</button>
+                </section>
             </section>
-            <section id="tarefas" style="display:block ;">
-                <!-- SEÇÃO DO CADASTRO DE TAREFAS -->
+            <script>
                
-            </section>
-            
+               function teste(){
+                alert("clicou")
+               }
+            </script>
+            <style>
+                #corDeFundo,
+                #modal{
+                    opacity:1 ;
+                    transition:0.5s;
+                    pointer-events: all;
+                }
+                #corDeFundo{
+                    width: 100%;
+                    height: 100%;
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    background-color: rgba(0, 0, 0, 0.6);
+                    z-index:5;
+                }
+                .modal{
+                    opacity: 0;
+                    pointer-events: none;
+                }
+                #modal.modal{
+                    top: 0;
+                }
+                #modal{
+                    position: fixed;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%,-50%) ;
+                    width: 400px;
+                    max-width: 80%;
+                    background-color: #fff;
+                    padding: 10px;
+                    border-radius: 15px;
+                    z-index: 10;
+                    text-align: center;
+                }
+                #modal_header{
+                    border-bottom: 1px solid #ccc;
+                    padding-bottom: 5px;
+                    margin-bottom: 5px;
+                }
+                #modal button{
+                    background-color: rgb(57, 49, 92);
+                    border: none;
+                    padding: 10px;
+                    width: 75px;
+                    border-radius: 5px;
+                    float: right;
+                }
+            </style>
+           
         </main>
  
     </body>

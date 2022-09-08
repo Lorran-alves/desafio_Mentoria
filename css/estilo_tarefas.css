@@ -13,7 +13,8 @@ main{
     box-shadow: 0 0px 0 1px  rgb(47, 79, 79);
 }
 header,
-#cadastroTarefas{
+#cadastroTarefas,
+#alteraTarefa{
     width: 100%;
     padding: 15px;
     background-color: white;
@@ -76,16 +77,18 @@ margin-left: 3px;
 }
 /* Tarefas */
 
-#cadastroTarefas{
+#cadastroTarefas,#alteraTarefa{
     margin-top: 10%;
     width: 100%;
 }
-#cadastroTarefas  form {
+#cadastroTarefas  form ,
+#alteraTarefa form{
     width:100%;
     display: inline-block;
     padding: 20px;
 }
-#cadastroTarefas input,select{
+#cadastroTarefas input,select,
+#alteraTarefa input,select{
     border: 2px solid rgb(81, 129, 129);
     padding: 10px;
     width: 30%;
@@ -99,7 +102,8 @@ margin-left: 3px;
 }
 
 
-#cadastroTarefas input#descricao{
+#cadastroTarefas input#descricao,
+#alteraTarefa input#descricao{
     width: 87%;
 }
 #linha_button{
