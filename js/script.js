@@ -49,7 +49,7 @@ class Usuario{
       if(this.verificaDadosCadastro()){//SÓ IRÁ ADICIONAR CASO O USUARIO AINDA NÃO POSSUIR CADASTRO
          localStorage.setItem('usuario_'+this.id+'_',JSON.stringify(u))
          this.incrementoId()
-         alert("CADASTRO REALIZADO COM SUCESSO!")
+         togglerModal()
       }
    }
     login(){
@@ -80,7 +80,6 @@ function novoCadastro(){
       let usuarios = new Usuario(nome, senha, email)
       usuarios.setUsuario(usuarios)
    }
-   console.log('aqui')
 }
 
 // let secaoLogin = document.querySelector("#secaoLogin")
@@ -88,6 +87,7 @@ function novoCadastro(){
 function loginUsuario(){
      let email = document.querySelector("#emailLogin").value
      let senha = document.querySelector("#senhaLogin").value
+    
      if(  senha != '' && validateEmail(email) == true){
       let usuarios = new Usuario( '', senha, email)
       usuarios.login()
@@ -187,6 +187,10 @@ class Tarefas {
       localStorage.setItem("id_tarefa",this.id_tarefa)
    }
    setTarefa(t){
+      togglerModal()
+      // INSERINDO OS DADOS DO MODAL DE FORMA DINAMICA
+      titulo_modal.innerText = "Adicionada com sucesso"
+      conteudo_modal.innerText = "A tarefa foi adiocionada"
       
       localStorage.setItem(this.id_usuario+this.id_tarefa, JSON.stringify(t))
       this.proximoId()//ELE VEIO PRIMEIRO PARA FAZER O INCREMENTO DO ID ANTES DE ADIOCIOANR
@@ -375,12 +379,24 @@ function adicionarTarefa(){
    if(status != '' && dia != '' && descricao != '' && dia_mes != '' && mes != '' && data != ''){
       let id = localStorage.getItem("id_usuario") //RESGATANDO O ID DO USUARIO DE ACORDO COM O SEU CADASTRO
       let tarefa = new Tarefas(dia, data, descricao, status, id)
-      tarefa.setTarefa(tarefa)
-       alert("adicionado com sucesso")
+       tarefa.setTarefa(tarefa)
        document.querySelector('.button').type = "reset" //SERVE PARA REINICIAR OS VALORES PARA 0 
    }
    else{
       document.querySelector('.button').type = "button" // VOLTANDO AO ESTADO NORMAL PARA SE ERRAR NÃO PREENCHER TUDO NOVAMENTE
       alert("Verifique se todos os campos foram preenchidos corretamente")
    }
+}
+
+// AREA DO MODAL 
+const modal = document.querySelector("#modal")
+const fundo = document.querySelector("#fundo")
+const closeModal = document.querySelector("#closeModal")
+let titulo_modal = document.querySelector("#titulo_modal")
+let conteudo_modal = document.querySelector("#conteudo_modal")
+closeModal.addEventListener("click", () =>togglerModal())
+
+let togglerModal = () => {
+   modal.classList.toggle('hide')
+   fundo.classList.toggle('hide')
 }

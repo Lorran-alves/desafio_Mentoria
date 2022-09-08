@@ -112,3 +112,60 @@ p{
     display: none;
 }
 
+
+
+
+
+
+
+
+
+
+
+/* ESTILO DO MODAL */
+#fundo.hide,
+#modal.hide{
+    opacity:0;
+    pointer-events: none;
+}
+#fundo,
+#modal{
+    opacity: 1;
+    transition: 0.5s;
+    pointer-events: all;
+}
+#modal.hide{
+    top: 0;
+}
+#fundo{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index:10;
+}
+#modal{
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%) ;
+    width: 400px;
+    max-width: 80%;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 15px;
+    z-index: 15;
+    text-align: center;
+}
+#modal_header{
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}
+#modal button{
+    float: right;
+}
+
+
