@@ -45,7 +45,7 @@
                             </optgroup>
                         </select>
         
-                        <select id="dia_semana_novo" class="select_metade">
+                        <select id="dia_semana_novo" class="select_dividido">
                             <optgroup>
                                 <option value="" selected disabled>Dia da semana</option>
                                 <option value="Domingo">Domingo</option>
@@ -57,17 +57,19 @@
                                 <option value="Sabado">Sabado</option>
                             </optgroup>
                         </select>
-                        <select id="select_status_novo" class="select_metade">
+                        <select id="select_status_novo" class="select_dividido">
                             <optgroup>
                                 <option value="" selected disabled>Status</option>
                                 <option value="Em Andamento">Em Andamento</option>
                                 <option value="Concluida">Concluida</option>
                             </optgroup>
                         </select>                        
-                        <section id="linha_button_novo">
+                        
                             <input type="text" placeholder="Descrição" id="descricao_nova">
-                            <button onclick="editarTarefaAtual()" class="button" type="button"><i class="fa-solid fa-pen" style="color:white;"></i></button>
-                        </section>
+                            <section id="section_button"> 
+                                <button onclick="editarTarefaAtual()" class="button" type="button"><i class="fa-solid fa-pen" style="color:white;"></i></button>
+                            </section>
+                       
                     </form>
                 </section>
             </section>

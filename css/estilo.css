@@ -9,28 +9,31 @@ body{
     font-size: 18px;
     background: rgb(47, 79, 79);
     background: linear-gradient(90deg, rgba(47, 79, 79,1) 0%, rgba(47, 79, 79,1) 50%);
+    box-sizing: border-box;
 }
 #container{
-    width: 1100px;
+    width: 90% ;
     margin: auto;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    flex-direction: column;
 }
 /* ESTILIZANDO A SEÇÃO DO FORMULARIO PARA O LOGIN */
 #secaoLogin,
 #secaoCadastro,
 #secaoNovosDados{
-    margin: auto;
-    display: flex;
-    flex-direction:column ;
-    justify-content:center ;
-    align-items: center;
-    margin-top: 15%; 
+    margin-top: 15%;
+    text-align: center;
     width: 30%;
-    min-width: 300px;
+    min-width: 270px;
+    max-width: 95%;
     background-color: #ccc;
     border-radius: 20px;
     align-items: center;
     padding: 2%;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24); 
 }
 #secaoNovosDados{
     width: 35%;
@@ -123,6 +126,16 @@ p{
 
 
 /* ESTILO DO MODAL */
+#modal h1{
+    color: #494949;
+    font-size: 1.2em;
+    font-weight: bold;
+
+}
+#modal p{
+    color: #606060;
+    
+}
 #fundo.hide,
 #modal.hide{
     opacity:0;
@@ -154,18 +167,28 @@ p{
     width: 400px;
     max-width: 80%;
     background-color: #fff;
-    padding: 10px;
+    padding: 15px;
     border-radius: 15px;
     z-index: 15;
-    text-align: center;
+    font-size: 1em;
 }
 #modal_header{
     border-bottom: 1px solid #ccc;
-    padding-bottom: 5px;
-    margin-bottom: 5px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    align-items: center;
 }
 #modal button{
-    float: right;
+    width: 100px;
 }
+/* AREA MEDIA */
 
-
+@media(max-width:800px){
+    #modal{
+        font-size: 0.8em;
+    }
+  
+}

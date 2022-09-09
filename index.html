@@ -13,7 +13,8 @@
         <link rel="stylesheet" href="fontawesome-free-6.1.2-web/css/all.min.css">
     </head>
     <body> <!--onload="carregaUsuarios()"-->
-        <main id="container">  
+         <main id="container">  
+           
             <section id="secaoLogin">    
                 <form class="login">
                     <i style="font-size:4em ;margin-bottom:1%;" class="fa-solid fa-user" ></i>
@@ -51,44 +52,23 @@
                         <input type="email" placeholder="Insira um Email válido" id="emailCadastro">
                         <i class="fa-solid fa-envelope"></i>
                     </div>
-                   
-                    <button onclick="novoCadastro()">Cadastrar</button>
-                    <p>Já tem cadastro?<a href="" onclick="mudaCampo()">Fazer login</a></p>
                 </form>
+                <button onclick="novoCadastro()">Cadastrar</button>
+                <p>Já tem cadastro?<a href=""onclick="mudaCampo()">Fazer login</a></p>
             </section> 
             
             <section id="fundo" class="hide"> </section>
             <section id="modal" class="hide">
-                <section id="modal_header">
-                    <h1>Cadastrado com Sucesso</h1>
-                </section>
-                <section id="modal_body">
-                    <p>Cadastro realizado com sucesso</p>
+                <section id="modal_header" >
+                    <h1 id="titulo_modal">Dados Invalidos</h1>
                     <button id="closeModal">Fechar</button>
                 </section>
+                <section id="modal_body">
+                    <p id="conteudo_modal">Verifique se o email ou a senha foram digitados corretamente</p>  
+                </section>
             </section>
-            <!-- <script>
-                const closeModal = document.querySelector("#closeModa")
-                const modal = document.querySelector("#modal")
-                const fundo = document.querySelector("#fundo")
-                console.log(fundo)
-                let togglerModal = () => {
-                    modal.classList.toggle('hide')
-                    fundo.classList.toggle('hide')
-                }
-               let array = [openModal, closeModal,]
-               array.forEach((el) => {
-                    el.addEventListener("click", () =>togglerModal())
-               });
-                
-
-                
-            </script> -->
-            <style>
-               
-            </style> 
            
-        </main>
+        </main> 
  
     </body>
 </html>

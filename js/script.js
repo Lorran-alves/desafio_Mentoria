@@ -31,11 +31,19 @@ class Usuario{
       let usuarioFiltradoNome = usuarios.filter(u => u.nome == this.nome) 
       let usuarioDadosFiltrado = usuarios.filter(u => u.email == this.email)
       if(usuarioFiltradoNome.length >= 1){
-         alert('nome de usuario já cadastrado')
+         togglerModal()
+         // INSERINDO OS DADOS DO MODAL DE FORMA DINAMICA
+         titulo_modal.innerText = "Nome existente"
+         conteudo_modal.innerText = "Tente ultilizar outro nome"
+         localStorage.setItem('usuario_'+this.id+'_',JSON.stringify(u))
          return false
       }
       if(usuarioDadosFiltrado.length >= 1){
-         alert("Dados invalidos")
+         togglerModal()
+         // INSERINDO OS DADOS DO MODAL DE FORMA DINAMICA
+         titulo_modal.innerText = "Dados inválidos"
+         conteudo_modal.innerText = "Tente ultilizar outros dados"
+         localStorage.setItem('usuario_'+this.id+'_',JSON.stringify(u))
          return false
       }
       return true
@@ -47,9 +55,12 @@ class Usuario{
    }
    setUsuario(u){
       if(this.verificaDadosCadastro()){//SÓ IRÁ ADICIONAR CASO O USUARIO AINDA NÃO POSSUIR CADASTRO
+         togglerModal()
+         // INSERINDO OS DADOS DO MODAL DE FORMA DINAMICA
+         titulo_modal.innerText = "Cadastrado"
+         conteudo_modal.innerText = "Conta cadastrada com sucesso"
          localStorage.setItem('usuario_'+this.id+'_',JSON.stringify(u))
          this.incrementoId()
-         togglerModal()
       }
    }
     login(){
@@ -60,7 +71,8 @@ class Usuario{
          location.replace("tarefas.html")
       }
       else{
-         alert("email ou senha inválidas")
+         togglerModal() //CHAMANDO O MODAL DE ERRO
+       
       }
    }
 }
@@ -91,11 +103,8 @@ function loginUsuario(){
      if(  senha != '' && validateEmail(email) == true){
       let usuarios = new Usuario( '', senha, email)
       usuarios.login()
-     }else{
-      alert("digite os campos corretamente")
      }
 }
-
 function mudaCampo(){ //vou mudar aqui
    let secaoLogin = document.querySelector("#secaoLogin")
    let secaoCadastro = document.querySelector("#secaoCadastro")
@@ -159,23 +168,21 @@ function verMenu(){
 // SEÇÃO DO CARREGAMENTO DAS TAREFAS
 
 class Tarefas {
-   constructor(dia, data, descricao, status, id){
+   constructor(dia, data, descricao, status,id){
       this.dia = dia
       this.data = data
       this.descricao = descricao 
       this.status = status
       this.id_usuario = "usuario_"+id+"_"
       this.id_tarefa = ''
-      // LEMBRA DE TIRAR O ID DAS CHAMADAS DAS FUNÇÕES POIS ELE JA ESTÁ SENDO RESGATADO AQUI
       if(id == undefined){ 
          let id = localStorage.getItem("id_usuario") 
          this.id_usuario = "usuario_"+id+"_"
       }
       if(this.id_tarefa == ''){//FIZ ISSO PARA QUE NA CHAMADA DA FUNÇÃO ELE JA RECEBER O VALOR CORRETO
-         this.recuperaIdTarefa()
+         this.recuperaIdTarefa()//ESSA FUNÇÃO RESGATA O ID DA TAREFA DE ONDE PAROU OU DÁ UM VALOR INICIAL CASO NÃO TENHA
          this.id_tarefa = localStorage.getItem('id_tarefa')
       }
-
    }
    recuperaDados(){
       let usuarioString = localStorage.getItem(this.id_usuario)
@@ -187,13 +194,10 @@ class Tarefas {
       localStorage.setItem("id_tarefa",this.id_tarefa)
    }
    setTarefa(t){
-      togglerModal()
-      // INSERINDO OS DADOS DO MODAL DE FORMA DINAMICA
-      titulo_modal.innerText = "Adicionada com sucesso"
-      conteudo_modal.innerText = "A tarefa foi adiocionada"
-      
+   
       localStorage.setItem(this.id_usuario+this.id_tarefa, JSON.stringify(t))
       this.proximoId()//ELE VEIO PRIMEIRO PARA FAZER O INCREMENTO DO ID ANTES DE ADIOCIOANR
+     
       this.mostrarTarefas()
    }
    getTarefas(){
@@ -377,8 +381,7 @@ function adicionarTarefa(){
   
 
    if(status != '' && dia != '' && descricao != '' && dia_mes != '' && mes != '' && data != ''){
-      let id = localStorage.getItem("id_usuario") //RESGATANDO O ID DO USUARIO DE ACORDO COM O SEU CADASTRO
-      let tarefa = new Tarefas(dia, data, descricao, status, id)
+      let tarefa = new Tarefas(dia, data, descricao, status)
        tarefa.setTarefa(tarefa)
        document.querySelector('.button').type = "reset" //SERVE PARA REINICIAR OS VALORES PARA 0 
    }
