@@ -146,11 +146,11 @@ input#descricao,input#descricao_nova{
 #table_tarefas  th{
     border-bottom: 2px solid #ccc;
     padding: 1%;
-
+    font-size: 1.4em;
 }
 #table_tarefas table td {
-    font-size:1em ;
-    padding: 2%;
+    font-size:1.2em ;
+    padding: 1%;
     text-align: center;
 }
 
@@ -162,8 +162,10 @@ input#descricao,input#descricao_nova{
 #table_tarefas i{
     cursor: pointer;
     color: #444343;
-    padding: 1.5%;
-    font-size: 1.2em;
+    padding: 5.5%;
+    font-size: 1.3em;
+    display: flex;
+    flex-direction: column;
 }
 #table_tarefas i:hover{
     color: #888888;
@@ -206,18 +208,21 @@ select{
         width: 95%;
     } 
     #table_tarefas{
-        border: 1px solid green;
         width: 100%;
+        border: 1px solid red;
+        text-align: left;
     }
-    table th{
+
+    #table_tarefas table th{
         font-size: 0.5em;
         padding: 1px;
         font-weight: bold;
     }
 
-    #table_tarefas table td ,th{
-        padding:4%;
-        font-size: 0.5em;
+    #table_tarefas table td {
+        font-size:0.8em ;
+        padding: 1%;
+        text-align: center;
     }
     #titulo{
         font-size: 1em;
@@ -228,20 +233,30 @@ select{
     #modal h1{
         font-size: 0.8em;
     }
-  
+    #table_tarefas table td i {
+        font-size: 1.4em;
+        padding-top: 5%;
+    }
 }
 @media(max-width:480px){
 
     #table_tarefas table td {
-        font-size: 0.4em;
+        font-size: 0.5em;
         padding:3.5%;
+    }
+    #table_tarefas table td i {
+        font-size: 1.6em;
+        padding-top: 0.4em;
     }
 }
 
 @media(max-width:380px){
 
     #table_tarefas table td {
-        font-size: 0.3em;
-        padding:3.5%;
+        font-size: 0.5em;
+        padding:1%;
+    }
+    #table_tarefas table td i {
+        font-size: 1.2em;
     }
 }
